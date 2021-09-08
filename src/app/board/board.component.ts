@@ -3,15 +3,34 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-board',
   template: `
-    <h1>Current player: {{ player }}</h1>
+    <h1>Current Player: {{ player }} </h1>
 
-    <button (click)="newGame()">Start new Game</button>
+    <button nbButton outline status="danger" (click)="newGame()">Start new Game</button>
 
+    <h2 *ngIf="winner">
+        Player {{ winner }} won the game!
+    </h2>
 
-    
+    <main>
+      <app-square 
+        *ngFor="let val of squares; let i = index" 
+        [value]="val"
+        (click)="makeMove(i)"> 
+      </app-square>
+    </main>
   `,
   styles: [
-  ]
+    ` main {
+        display: grid;
+        grid-template-columns: 200px 200px 200px;
+        grid-gap: 0px;
+      }
+
+      app-square {
+        border: 1px gray solid;
+        height: 200px;
+      }
+  `]
 })
 export class BoardComponent implements OnInit {
   squares!: any[];
